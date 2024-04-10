@@ -10,16 +10,33 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+# Initialize variable to hold the custom header
+CUSTOM_HEADER=""
+
+# Process command-line options
+while getopts "H:" opt; do
+    case "$opt" in
+        H) CUSTOM_HEADER=$OPTARG ;;
+        ?) echo -e "${RED}Usage: $0 [-H \"Header: Value\"] <URL>${NC}"
+           exit 1 ;;
+    esac
+done
+shift $((OPTIND -1))
+
 # Check if a URL was passed
 if [ "$#" -ne 1 ]; then
-    echo -e "${RED}Usage: $0 <URL>${NC}"
+    echo -e "${RED}Usage: $0 [-H \"Header: Value\"] <URL>${NC}"
     exit 1
 fi
 
 URL=$1
 
-# Use curl to fetch the headers, following redirects
-RESPONSE_HEADERS=$(curl -s -L -D - "$URL" -o /dev/null)
+# Use curl to fetch the headers, following redirects. Include custom header if provided.
+if [ -n "$CUSTOM_HEADER" ]; then
+    RESPONSE_HEADERS=$(curl -s -L -D - "$URL" -o /dev/null -H "$CUSTOM_HEADER")
+else
+    RESPONSE_HEADERS=$(curl -s -L -D - "$URL" -o /dev/null)
+fi
 
 # Define a function to check and print a specific header
 check_header() {
