@@ -33,6 +33,7 @@ To use SecurityHeadersCheck, you need:
 To check the security headers of a website, run:
 
 ```sh
+wget https://raw.githubusercontent.com/pwnmeow/SecurityHeadersCheck/main/check.sh
 ./check.sh [website URL]
 ```
 
