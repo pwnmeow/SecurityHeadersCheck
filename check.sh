@@ -1,8 +1,8 @@
+#!/bin/bash
 # Created by Pwnmeow 
 # Twitter: @BeingSheerazAli
 # sheerazali.com
 
-#!/bin/bash
 
 # Color codes
 RED='\033[0;31m'
